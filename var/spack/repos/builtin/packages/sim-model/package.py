@@ -54,12 +54,15 @@ class SimModel(Package):
     def lib_suffix(self):
         return ('_' + self.mech_name) if self.mech_name else ''
 
-    def _build_mods(self, mods_location, link_flag='', include_flag='', corenrn_mods=None):
+    def _build_mods(self, mods_location, link_flag='', include_flag='', corenrn_mods=None,
+                    dependencies=None):
         """Build shared lib & special from mods in a given path
         """
         # pass include and link flags for all dependency libraries
         # Compiler wrappers are not used to have a more reproducible building
-        for dep in set(self.spec.dependencies_dict('link').keys()):
+        if dependencies is None:
+            dependencies = self.spec.dependencies_dict('link').keys()
+        for dep in set(dependencies):
             link_flag += " {0.ld_flags} {0.rpath_flags}".format(self.spec[dep].libs)
             include_flag += " -I " + str(self.spec[dep].prefix.include)
 
@@ -124,10 +127,12 @@ class SimModel(Package):
 
         if self.spec.satisfies('+coreneuron'):
             with working_dir('build_' + mech_name):
-                if self.spec.satisfies('^coreneuron@0.14:0.16.99'):
+                if self.spec.satisfies('^coreneuron@0.0:0.14'):
+                    raise Exception('Coreneuron versions before 0.14 are not supported by Neurodamus model')
+                elif self.spec.satisfies('^coreneuron@0.14:0.16.99'):
                     which('nrnivmech_install.sh', path=".")(prefix)
-                elif self.spec.satisfies('^coreneuron@0.17:'):
-                    which('nrnivmodl-core')("-d", prefix)  # Set dest to install
+                else:
+                    which('nrnivmodl-core')("-d", prefix, 'mod')  # Set dest to install
 
         # Install special
         shutil.copy(join_path(arch, 'special'), prefix.bin)

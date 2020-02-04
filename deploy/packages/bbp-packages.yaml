@@ -23,20 +23,15 @@ packages:
     specs:
       - archngv@0.0.0
       - asciitoh5@1.0
-      - brainbuilder@0.11.3
-      - brainbuilder@0.11.4
-      - brainbuilder@0.11.5
-      - brainbuilder@0.11.6
       - brainbuilder@0.11.7
-      - brion@3.1.0 +python ^boost@1.65.0
+      - brion@3.1.0 +python
       - connectome-tools@0.3.2
       - spatial-index@0.2.1
       - spykfunc@0.15.2
-      - psp-validation@0.2.0
-      - psp-validation@0.1.12
+      - psp-validation@0.2.1
       - py-pytouchreader@1.4.3
-      - py-basalt@0.2.4
-      - py-entity-management@1.0.18
+      # - py-basalt@0.2.4
+      - py-entity-management@1.0.20
       - py-jupyter-notebook@4.2.3
       - py-bbp-analysis-framework@1.6.40
       - py-morph-tool@0.1.14
@@ -62,7 +57,7 @@ packages:
     specs:
       - py-bbp-analysis-framework@0.6.39
       - py-simwriter@0.4.3
-      - py-entity-management@1.0.18
+      - py-entity-management@1.0.20
 
   gnu-stable-parallel:
     target_matrix:
@@ -73,17 +68,15 @@ packages:
       - mpi
     specs:
       - functionalizer@3.12.2
-      - parquet-converters@0.5.2
+      - parquet-converters@0.5.3
       - synapsetool@0.5.8
-      - touchdetector@4.4.2
-      - touchdetector@5.1.0
       - touchdetector@5.3.3
-      - brayns +opendeck +brion ^ospray@1.7.3%intel
-      - brayns@1.0.1 +brion ^ospray%intel
+      - brayns +opendeck +brion ^ospray@1.7.3%intel@19.0.4
+      - brayns@1.0.1 +brion ^ospray%intel@19.0.4
       - brayns@immersive +opendeck +brion +optix
-      - brayns-topologyviewer@0.1.0 ^brayns@0.8.0 ^ospray@1.7.3%intel
-      - brayns-brainatlas@0.1.0 ^brayns@0.8.0 ^ospray@1.7.3%intel
-      - brayns-membranelessorganelles@0.1.0 ^brayns@0.8.0 ^ospray@1.7.3%intel
+      - brayns-topologyviewer@0.1.0 ^brayns@0.8.0 ^ospray@1.7.3%intel@19.0.4
+      - brayns-brainatlas@0.1.0 ^brayns@0.8.0 ^ospray@1.7.3%intel@19.0.4
+      - brayns-membranelessorganelles@0.1.0 ^brayns@0.8.0 ^ospray@1.7.3%intel@19.0.4
 
   gnu-stable-parallel-python:
     target_matrix:
@@ -108,7 +101,6 @@ packages:
       - mpi
       - python
     specs:
-      - steps@3.4.1+petsc
       - steps@3.5.0b+petsc
       - nest@2.18.0
 
@@ -127,7 +119,6 @@ packages:
   gnu-stable-lapack-python:
     target_matrix:
       - gnu-stable
-      - gnu-stable-py2
     requires:
       - architecture
       - compiler
@@ -135,10 +126,10 @@ packages:
       - python
     specs:
       - nest@2.18.0
-      - py-bluepy@0.14.3
+      - py-bluepy@0.14.5
       - py-bluepymm@0.6.38
       - py-bluepyopt@1.6.56
-      - py-efel@3.0.22
+      - py-efel@3.0.70
       - py-bglibpy@4.1.4
 
 

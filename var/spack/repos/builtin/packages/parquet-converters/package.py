@@ -35,6 +35,7 @@ class ParquetConverters(CMakePackage):
     git      = "ssh://bbpcode.epfl.ch/building/ParquetConverters"
 
     version('develop', submodules=True)
+    version('0.5.3', tag='v0.5.3', submodules=True)
     version('0.5.2', tag='v0.5.2', submodules=True)
     version('0.5.1', tag='v0.5.1', submodules=True)
     version('0.5.0', tag='v0.5.0', submodules=True)
@@ -45,7 +46,7 @@ class ParquetConverters(CMakePackage):
     depends_on('hdf5+mpi')
     depends_on('highfive+mpi')
     depends_on('arrow+parquet')
-    depends_on('arrow+parquet@0.12:', when='@0.4:')
+    depends_on('arrow+parquet@:0.12', when='@0.4:0.5.3')
     depends_on('snappy~shared')
     depends_on('synapsetool+mpi')
     depends_on('synapsetool+mpi@:0.5.6', when='@:0.5.2')

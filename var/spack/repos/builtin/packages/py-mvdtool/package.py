@@ -14,11 +14,11 @@ class PyMvdtool(PythonPackage):
     url      = "https://github.com/BlueBrain/MVDTool.git"
     git      = "https://github.com/BlueBrain/MVDTool.git"
 
-    version('develop', branch='master', submodules=True, clean=False)
-    version('2.3.2', tag='v2.3.2', submodules=True, clean=False)
-    version('2.3.1', tag='v2.3.1', submodules=True, clean=False)
-    version('2.3.0', tag='v2.3.0', submodules=True, clean=False)
-    version('2.2.1', tag='v2.2.1', submodules=True, clean=False)
+    version('develop', branch='master', submodules=True, get_full_repo=False)
+    version('2.3.2', tag='v2.3.2', submodules=True, get_full_repo=False)
+    version('2.3.1', tag='v2.3.1', submodules=True, get_full_repo=False)
+    version('2.3.0', tag='v2.3.0', submodules=True, get_full_repo=False)
+    version('2.2.1', tag='v2.2.1', submodules=True, get_full_repo=False)
 
     variant('mpi', default=True, description='Build with support for MPI')
 
@@ -28,6 +28,7 @@ class PyMvdtool(PythonPackage):
     depends_on('cmake@3.2:', type='build')
     depends_on('py-numpy', type='run')
 
+    depends_on('boost')
     depends_on('mpi', when='+mpi')
     depends_on('hdf5+mpi', type=('build', 'run'), when="+mpi")
     depends_on('hdf5~mpi', type=('build', 'run'), when="~mpi")
