@@ -14,7 +14,7 @@ class NeurodamusNeocortex(NeurodamusModel):
     homepage = "ssh://bbpcode.epfl.ch/sim/models/neocortex"
     git      = "ssh://bbpcode.epfl.ch/sim/models/neocortex"
 
-    version('develop', branch='master', submodules=True, get_full_repo=True)
+    version('develop', branch='sandbox/awile/review_50245', submodules=True, get_full_repo=False)
     version('0.3', tag='0.3-1', submodules=True, get_full_repo=True)
     version('0.2', tag='0.2', submodules=True, get_full_repo=True)
     version('0.1', tag='0.1', submodules=True, get_full_repo=True)
