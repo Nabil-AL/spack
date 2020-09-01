@@ -15,11 +15,12 @@ class Eigen(CMakePackage):
     url      = 'https://gitlab.com/libeigen/eigen/-/archive/3.3.7/eigen-3.3.7.tar.gz'
     git      = 'https://gitlab.com/libeigen/eigen.git'
 
+    version('develop', submodules=True)
     version('3.3.7', sha256='d56fbad95abf993f8af608484729e3d87ef611dd85b3380a8bad1d5cbc373a57')
     version('3.3.6', sha256='e7cd8c94d6516d1ada9893ccc7c9a400fcee99927c902f15adba940787104dba')
     version('3.3.5', sha256='383407ab3d0c268074e97a2cbba84ac197fd24532f014aa2adc522355c1aa2d0')
     version('3.3.4', sha256='c5ca6e3442fb48ae75159ca7568854d9ba737bc351460f27ee91b6f3f9fd1f3d')
-    version('3.3.3', sha256='837d5f54393d1310cb4eae680b198dd49e3902f561d9c8ce7ed64f29630fbf6c')
+    version('3.3.3', sha256='fd72694390bd8e81586205717d2cf823e718f584b779a155db747d1e68481a2e')
     version('3.3.2', sha256='8d7611247fba1236da4dee7a64607017b6fb9ca5e3f0dc44d480e5d33d5663a5')
     version('3.3.1', sha256='50dd21a8997fce0857b27a126811ae8ee7619984ab5425ecf33510cec649e642')
     version('3.3.0', sha256='de82e01f97e1a95f121bd3ace87aa1237818353c14e38f630a65f5ba2c92f0e1')
