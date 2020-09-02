@@ -14,6 +14,7 @@ class Touchdetector(CMakePackage):
     git      = "ssh://bbpcode.epfl.ch/building/TouchDetector"
 
     version('develop', submodules=True)
+    version('blargh', branch='sandbox/matwolf/blargh', submodules=True)
     version('5.4.0', tag='5.4.0', submodules=True)
     version('5.3.4', tag='5.3.4', submodules=True)
     version('5.3.3', tag='5.3.3', submodules=True)
@@ -32,20 +33,20 @@ class Touchdetector(CMakePackage):
 
     depends_on('cmake', type='build')
     depends_on('boost@1.50:')
-    depends_on('catch~single_header', when='@5.0.2:')
-    depends_on('eigen', when='@4.5:')
-    depends_on('fmt', when='@4.5:')
+    depends_on('catch~single_header')
+    depends_on('eigen')
+    depends_on('fmt')
     depends_on('morphio@2.0.8:', when='@4.5:5.1')
-    depends_on('morpho-kit', when='@5.2:')
-    depends_on('mvdtool@2.1.0:', when='@5.1.1:')
+    depends_on('morpho-kit')
+    depends_on('mvdtool@2.1.0:')
     depends_on('mvdtool@1.5.1:2.0.0', when='@4.5:5.1')
     depends_on('mpi')
-    depends_on('pugixml', when='@4.5:')
-    depends_on('random123', when='@5.3.3:')
+    depends_on('pugixml')
+    depends_on('random123')
     depends_on('range-v3@:0.4', when='@5.0.2:5.3.2')
-    depends_on('range-v3', when='@5.3.3:')
-    depends_on('highfive+mpi', when='@5.3.0:')
-    depends_on('nlohmann-json', when='@5.3.3:')
+    depends_on('range-v3')
+    depends_on('highfive+mpi')
+    depends_on('nlohmann-json')
 
     # Old dependencies
     depends_on('hpctools~openmp', when='~openmp@:4.4')
