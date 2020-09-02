@@ -28,6 +28,8 @@ class Eigen(CMakePackage):
     version('3.2.9', sha256='f683b20259ad72c3d384c00278166dd2a42d99b78dcd589ed4a6ca74bbb4ca07')
     version('3.2.8', sha256='64c54781cfe9eefef2792003ab04b271d4b2ec32eda6e9cdf120d7aad4ebb282')
     version('3.2.7', sha256='0ea9df884873275bf39c2965d486fa2d112f3a64b97b60b45b8bc4bb034a36c1')
+    version('3.2.6', sha256='e097b8dcc5ad30d40af4ad72d7052e3f78639469baf83cffaadc045459cda21f')
+    version('3.2.5', sha256='8068bd528a2ff3885eb55225c27237cf5cda834355599f05c2c85345db8338b4')
 
     variant('metis', default=False,
             description='Enables metis permutations in sparse algebra')
@@ -53,9 +55,8 @@ class Eigen(CMakePackage):
 
     patch('find-ptscotch.patch', when='@3.3.4')
 
-    def setup_environment(self, spack_env, run_env):
-        run_env.prepend_path('CPATH',
-                             join_path(self.prefix, 'include', 'eigen3'))
+    def setup_run_environment(self, env):
+        env.prepend_path('CPATH', self.prefix.include.eigen3)
 
     @property
     def headers(self):
