@@ -49,6 +49,7 @@ class Coreneuron(CMakePackage):
     depends_on('bison', type='build')
     depends_on('cmake@3:', type='build')
     depends_on('flex', type='build')
+    depends_on('python', type='run')
 
     depends_on('boost', when='+tests')
     depends_on('cuda', when='+gpu')
@@ -144,7 +145,9 @@ class Coreneuron(CMakePackage):
              % ('ON' if '+openmp' in spec else 'OFF'),
              '-DCORENRN_ENABLE_UNIT_TESTS=%s'
              % ('ON' if '+tests' in spec else 'OFF'),
-             '-DCORENRN_ENABLE_TIMEOUT=OFF'
+             '-DCORENRN_ENABLE_TIMEOUT=OFF',
+             '-DPYTHON_EXECUTABLE:FILEPATH='
+                        + self.spec["python"].command.path
              ]
 
         if spec.satisfies('+nmodl'):

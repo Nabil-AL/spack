@@ -1,84 +1,108 @@
 packages:
+    openmpi:
+        paths:
+            openmpi@4.0.3: /cineca/prod/opt/compilers/openmpi/4.0.3/gnu--8.4.0/
+        version: [4.0.3]
+        buildable: False
+    mpich:
+        paths:
+            mpich@10.3.1: /cineca/prod/opt/compilers/spectrum_mpi/10.3.1/binary/
+        version: [10.3.1]
+        buildable: False
     autoconf:
         paths:
             autoconf@2.69: /usr
         buildable: False
         version: [2.69]
-    automake:
+    flex:
         paths:
-            automake@1.13.4: /usr
+            flex@2.6.4: /usr
         buildable: False
-        version: [1.13.4]
+        version: [2.6.4]
+    bison:
+        paths:
+            bison@3.0.4: /usr
+        buildable: False
+        version: [3.0.4]
     binutils:
         paths:
             binutils@2.32: /usr
         buildable: False
         version: [2.32]
-    bison:
+    automake:
         paths:
-            bison@2.7: /usr
+            automake@1.15.1: /usr
         buildable: False
-        version: [2.7]
-    boost:
-        variants: +pic
-    cmake:
-        paths:
-            cmake@3.12.0: /cineca/prod/opt/tools/cmake/3.12.0/none
-        buildable: False
-        version: [3.5.2]
-    flex:
-        paths:
-            flex@2.5.37: /usr
-        buildable: False
-        version: [2.5.37]
+        version: [1.15.1]
     gettext:
         paths:
-            gettext@0.19.7: /usr
+            gettext@0.20: /usr
         buildable: False
-        version: [0.19.7]
-    hdf5:
+        version: [0.20]
+    pkg-config:
         paths:
-            hdf5@1.8.18+mpi+hl: /cineca/prod/opt/libraries/hdf5/1.8.18/intelmpi--2018--binary
-            hdf5@1.8.18~mpi+hl: /cineca/prod/opt/libraries/hdf5/1.8.18/openmpi--1-10.3--gnu--6.1.0
-        variants: ~fortran ~cxx
+            pkg-config@0.29.2: /usr
         buildable: False
-        version: [1.8.18]
-    intel-mpi-external:
-        paths:
-            intel-mpi-external@2018: /cineca/prod/opt/compilers/intel/pe-xe-2018/binary/impi/2018.4.274
-        buildable: False
-        version: [2018]
+        version: [0.29.2]
     libtool:
         paths:
-            libtool@2.4.2: /usr
+            libtool@2.4.6: /usr
         buildable: False
-        version: [2.4.2]
+        version: [2.4.6]
     ncurses:
         paths:
             ncurses@5.9: /usr
         buildable: False
         version: [5.9]
-    pkg-config:
+    openssl:
         paths:
-            pkg-config@0.27.1: /usr
+            openssl@system: /usr
         buildable: False
-        version: [0.27.1]
+        version: [system]
+    cmake:
+        paths:
+            cmake@3.17.1: /cineca/prod/opt/tools/cmake/3.17.1/gnu--8.4.0/
+        buildable: False
+        version: [3.17.1]
+    boost:
+        #paths:
+        #    boost@1.72.0: /cineca/prod/opt/libraries/boost/1.72.0/spectrum_mpi--10.3.1--binary
+        #modules:
+        #    boost@1.72.0: boost/1.72.0--spectrum_mpi--10.3.1--binary
+        variants: +python
+        version: [1.72.0]
+        #buildable: False
+    hdf542:
+        paths:
+            hdf5@1.12.0~mpi+hl: /cineca/prod/opt/libraries/hdf5/1.12.0/gnu--8.4.0
+            hdf5@1.12.0+mpi+hl: /cineca/prod/opt/libraries/hdf5/1.12.0--spectrum_mpi--10.3.1/pgi--19.10--binary/
+        buildable: False
+        version: [1.12.0]
+    zeromq:
+        variants: ~libsodium
     python:
+        #modules:
+        #    python@3.7.7: python/3.7.7
+        #    python@3.8.2: python/3.8.2 
         paths:
-            python@3.6.4: /cineca/prod/opt/compilers/python/3.6.4/none
-            python@2.7.12: /cineca/prod/opt/compilers/python/2.7.12/none
+            python@3.7.8: /cineca/prod/opt/compilers/python/3.7.8/none/
+            python@3.8.2: /cineca/prod/opt/compilers/python/3.8.2/none/
+        version: [3.7.8, 3.8.2]
+    py-numpy42:
+        paths:
+            py-numpy@1.19.0: /cineca/prod/opt/compilers/python/3.8.2/none/
+        version: [1.19.0]
         buildable: False
-        version: [3.6.4, 2.7.12]
-    py-numpy:
+    py-scipy:
         paths:
-            py-numpy@1.14.0: /cineca/prod/opt/libraries/numpy/1.14.0/python--3.6.4
+            py-scipy@1.5.1: /cineca/prod/opt/libraries/scipy/1.5.1/python--3.8.2/
+        version: [1.5.1]
         buildable: False
-        version: [1.14.0]
-    zlib:
-        paths:
-            zlib@1.2.11%intel: /cineca/prod/opt/libraries/zlib/1.2.11/intel--pe-xe-2018--binary
-        version: [1.2.11]
+    neuron:
+        variants: +mpi +cross-compile
+    reportinglib:
+        variants: +static
     all:
-        compiler: [intel]
+        compiler: [gcc@8.4.0]
         providers:
-            mpi: [intel-mpi-external]
+            mpi: [mpich]

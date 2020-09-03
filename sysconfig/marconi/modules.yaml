@@ -33,12 +33,11 @@ modules:
     whitelist:
       - 'brion+python'
       - 'neurodamus-hippocampus'
+      - 'neurodamus-neocortex'
       - 'neuron'
       - 'py-bluepy'
       - 'py-bluepyopt'
-      - 'py-matplotlib'
-      - 'py-pandas'
-      - 'zlib%gcc'
+      - 'py-neurodamus'
     blacklist:
       - '%gcc'
       - '%intel'

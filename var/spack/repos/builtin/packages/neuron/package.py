@@ -128,7 +128,7 @@ class Neuron(CMakePackage):
                                                              "+tests"]]
         if "+mpi" in self.spec:
             args.append("-DNRN_ENABLE_MPI=ON")
-            args.append("-DNRN_ENABLE_MPI_DYNAMIC=ON")
+            args.append("-DNRN_ENABLE_MPI_DYNAMIC=OFF")
         else:
             args.append("-DNRN_ENABLE_MPI=OFF")
         if "+python" in self.spec:
