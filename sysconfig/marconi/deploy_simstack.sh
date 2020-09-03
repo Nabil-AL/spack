@@ -15,7 +15,7 @@ export HOME=$DEPLOYMENT_HOME
 
 # Clone spack repository
 cd $DEPLOYMENT_HOME/sources
-[[ -d spack ]] || git clone https://github.com/BlueBrain/spack.git
+[[ -d spack ]] || git clone https://github.com/BlueBrain/spack.git -b marconi_deployment
 
 # Setup environment
 export SPACK_ROOT=`pwd`/spack
@@ -42,12 +42,6 @@ module list
 export LD_LIBRARY_PATH=/cineca/prod/opt/compilers/python/3.7.8/none/lib:$LD_LIBRARY_PATH
 
 export LC_CTYPE=en_US.UTF-8
-
-spack uninstall neurodamus-hippocampus
-spack uninstall neurodamus-neocortex
-spack uninstall neurodamus-mousify
-spack uninstall py-neurodamus
-spack uninstall py-bluepyopt
 
 # PYTHON 3 packages
 spack spec -Il neurodamus-hippocampus+coreneuron ^python@3.7.8
