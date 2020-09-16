@@ -18,7 +18,7 @@ class H5benchmark(CMakePackage):
     depends_on('cmake@3.2:', type='build')
     depends_on('hdf5+mpi')
     depends_on('morphio@sergiorg_h5bmark')
-    depends_on('morpho-kit@blargh')
+    depends_on('morpho-kit@blargh2')
     depends_on('mpi')
 
     root_cmakelists_dir = 'neuromapp/h5benchmark'
