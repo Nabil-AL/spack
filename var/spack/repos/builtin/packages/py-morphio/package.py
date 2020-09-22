@@ -16,6 +16,7 @@ class PyMorphio(PythonPackage):
     version('unifurcation', branch='unifurcation', submodules=True, get_full_repo=True)
 
     version('2.7.1', tag='v2.7.1', submodules=True, get_full_repo=True)
+    version('2.3.11', tag='v2.3.11', submodules=True, get_full_repo=True)
     version('2.3.10', tag='v2.3.10', submodules=True, get_full_repo=True)
     version('2.3.4', tag='v2.3.4', submodules=True, get_full_repo=True)
     version('2.2.1', tag='v2.2.1', submodules=True, get_full_repo=True)
