@@ -315,7 +315,7 @@ configure_compilers() {
             makelocalrc ${PGI_DIR} -gcc ${GCC_DIR}/bin/gcc -gpp ${GCC_DIR}/bin/g++ -g77 ${GCC_DIR}/bin/gfortran -x -net
             #configure pgi network license
             template=$(find $PGI_DIR -name localrc* ! -iname "*.bak" | tail -n 1)
-            gpu_nodes=$(sinfo -h -o %n -N -puc2_all)
+            gpu_nodes=$(sinfo -h -N -o %n\ %f|awk '/volta/ {if (!c[$1]) {print $1}; c[$1]=1}')
             jenkins_nodes=$(squeue -h -o %N\ %j -u bbprelman|awk '/ BB5-[0-9]+$/ {print $1}')
             for node in bbpv1 bbpv2 bbptadm tds03 tds04 ${gpu_nodes} ${jenkins_nodes}; do
                 cp $template $PGI_DIR/localrc.$node || true
