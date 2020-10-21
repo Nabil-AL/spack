@@ -13,12 +13,13 @@ class H5benchmark(CMakePackage):
     git      = "https://github.com/BlueBrain/neuromapp.git"
 
     version('develop', branch='sergiorg_h5bmark', submodules=False)
-    version('1.0.0', branch='6627a1', submodules=False)
+    version('1.0.1', commit='bddcdd', submodules=False)
+    version('1.0.0', commit='6627a1', submodules=False)
 
     depends_on('cmake@3.2:', type='build')
     depends_on('hdf5+mpi')
-    depends_on('morphio@sergiorg_h5bmark')
-    depends_on('morpho-kit@blargh2')
+    depends_on('morphio')
+    depends_on('morpho-kit')
     depends_on('mpi')
 
     root_cmakelists_dir = 'neuromapp/h5benchmark'
