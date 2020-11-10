@@ -26,6 +26,7 @@ class NeurodamusNeocortex(NeurodamusModel):
 
     # Legacy versions
     version('develop', branch='master', submodules=True, get_full_repo=True)
+    version('adex', branch='sandbox/magkanar/adex_mod', submodules=True, get_full_repo=True)
     version('1.0', tag='1.0', submodules=True, get_full_repo=True)
     version('0.3', tag='0.3-1', submodules=True, get_full_repo=True)
     version('0.2', tag='0.2', submodules=True, get_full_repo=True)
