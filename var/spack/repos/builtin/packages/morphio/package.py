@@ -21,6 +21,7 @@ class Morphio(CMakePackage):
     version('2.0.8', tag='v2.0.8', submodules=True)
 
     variant('mpi', default=True, description="Build with MPI support")
+    variant('use_double', default=False, description='Use doubles instead of float')
 
     depends_on('cmake@3.2:', type='build')
     depends_on('hdf5~mpi', when='~mpi')
@@ -34,4 +35,6 @@ class Morphio(CMakePackage):
                 '-DCMAKE_C_COMPILER={0}'.format(self.spec['mpi'].mpicc),
                 '-DCMAKE_CXX_COMPILER={0}'.format(self.spec['mpi'].mpicxx)
             ]
+        if self.spec.satisfies("+use_double"):
+            args += ['-DMORPHIO_USE_DOUBLE=ON']
         return args
