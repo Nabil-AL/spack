@@ -32,7 +32,8 @@ class Neuron(CMakePackage):
     patch("fix_brew_py_18e97a2d.patch", when="@7.8.0c")
 
     version("develop", branch="master")
-    version("7.9.0a",  commit="fc74b85", preferred=True)
+    version("7.9.0b",  commit="94147e5", preferred=True)
+    version("7.9.0a",  commit="fc74b85")
     version("7.8.1",   tag="7.8.1")
     version("7.8.0c",  commit="e529b4f")
     version("7.8.0b",  commit="92a208b")
@@ -78,6 +79,7 @@ class Neuron(CMakePackage):
     variant("rx3d",       default=True,  description="Enable cython translated 3-d rxd. Depends on pysetup")
     variant("shared",     default=True,  description="Build shared libraries")
     variant("tests",      default=False, description="Enable unit tests")
+    variant("legacy-unit", default=True, description="Enable legacy units")
 
     variant("codechecks", default=False,
             description="Perform additional code checks like "
@@ -144,7 +146,7 @@ class Neuron(CMakePackage):
             args.append("-DNRN_ENABLE_MOD_COMPATIBILITY:BOOL=ON")
         if "+binary" in self.spec:
             args.append("-DNRN_ENABLE_BINARY_SPECIAL=ON")
-        if self.spec.satisfies('@7.9.0b:'):
+        if "+legacy-unit" in self.spec:
             args.append('-DNRN_DYNAMIC_UNITS_USE_LEGACY=ON')
 
         return args
