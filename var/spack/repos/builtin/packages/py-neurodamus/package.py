@@ -22,7 +22,7 @@ class PyNeurodamus(PythonPackage):
     version('2.1.2',   tag='2.1.2')
     version('2.1.1',   tag='2.1.1')
     version('2.0.2',   tag='2.0.2')
-    version('adex', branch='sandbox/magkanar/plugin_point_neuron_dist')
+    version('adex', branch='sandbox/magkanar/point_neuron')
     version('2.0.0',   tag='2.0.0')
     version('1.3.2',   tag='1.3.2')
     version('1.3.1',   tag='1.3.1')
