@@ -40,8 +40,6 @@ class Touchdetector(CMakePackage):
     depends_on('fmt@:5.999', when='@4.5:')
     depends_on('morphio@2.0.8:', when='@4.5:5.1')
     depends_on('morpho-kit', when='@5.2:')
-    depends_on('mvdtool@2.1.0:', when='@5.1.1:')
-    depends_on('mvdtool@1.5.1:2.0.0', when='@4.5:5.1')
     depends_on('mpi')
     depends_on('pugixml', when='@4.5:')
     depends_on('random123', when='@5.3.3:')
@@ -49,8 +47,11 @@ class Touchdetector(CMakePackage):
     depends_on('range-v3@:0.10', when='@5.3.3:')
     depends_on('highfive+mpi', when='@5.3.0:')
     depends_on('nlohmann-json', when='@5.3.3:')
-
+    depends_on('libsonata+mpi', when='@5.5.2:')
+    
     # Old dependencies
+    depends_on('mvdtool@2.1.0:', when='@5.1.1:5.5.1')
+    depends_on('mvdtool@1.5.1:2.0.0', when='@4.5:5.1')
     depends_on('hpctools~openmp', when='~openmp@:4.4')
     depends_on('hpctools+openmp', when='+openmp@:4.4')
     depends_on('libxml2', when='@:4.4')
