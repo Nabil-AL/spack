@@ -11,9 +11,11 @@ class PyPyzmq(PythonPackage):
     homepage = "https://github.com/zeromq/pyzmq"
     url      = "https://github.com/zeromq/pyzmq/archive/v14.7.0.tar.gz"
 
+    # We don't support the CFFI interface. Reading the sources, seems to be
+    # a second class citizen, anyways
     import_modules = [
         'zmq', 'zmq.green', 'zmq.green.eventloop', 'zmq.sugar', 'zmq.auth',
-        'zmq.auth.asyncio', 'zmq.utils', 'zmq.backend', 'zmq.backend.cffi',
+        'zmq.auth.asyncio', 'zmq.utils', 'zmq.backend',  # 'zmq.backend.cffi',
         'zmq.backend.cython', 'zmq.ssh', 'zmq.eventloop',
         'zmq.eventloop.minitornado', 'zmq.eventloop.minitornado.platform',
         'zmq.log', 'zmq.asyncio', 'zmq.devices'
