@@ -726,7 +726,6 @@ EOF
     spack -D "${HOME}/build_environment" concretize -f
     log "installing environment"
     srun -N${BUILD_NODES:-1} --ntasks-per-node 4 -c12 -t24:0:0 -Aproj16 -Ccpu -pprod -ppre_prod -J"spack!" slurmspack "${HOME}/build_environment"
-    spack -D "${HOME}/build_environment" test run --log-format junit --log-file "${HOME}/stack-test.xml"
 
     cat > "${HOME}/stack.xml" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
@@ -735,6 +734,8 @@ EOF
 EOF
 
     installed-hashes -e "${HOME}/build_environment" > "${HOME}/specs.txt"
+
+    spack -D "${HOME}/build_environment" test run --log-format junit --log-file "${HOME}/stack-test.xml" $(awk '{print $1}')
 
     populate_build_cache "${install_start}"
 
