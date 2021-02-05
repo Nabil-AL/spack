@@ -43,4 +43,4 @@ class PyPyzmq(PythonPackage):
         self.setup_py('configure',  '--zmq=%s' % spec['libzmq'].prefix)
 
     def setup_run_environment(self, env):
-        env.append("LD_LIBRARY_PATH", self.spec['libzmq'].prefix.lib)
+        env.append_path("LD_LIBRARY_PATH", self.spec['libzmq'].prefix.lib)
