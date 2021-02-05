@@ -41,3 +41,6 @@ class PyPyzmq(PythonPackage):
     def configure(self, spec, prefix):
         """ Provide zeromq directory explicitly especially when external"""
         self.setup_py('configure',  '--zmq=%s' % spec['libzmq'].prefix)
+
+    def setup_run_environment(self, spec, env):
+        env.append("LD_LIBRARY_PATH", spec['libzmq'].prefix.lib)
