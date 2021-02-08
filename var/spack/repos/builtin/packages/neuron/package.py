@@ -463,11 +463,11 @@ class Neuron(CMakePackage):
             filter_file(env["CXX"], cxx_compiler, nrniv_makefile, **kwargs)
 
         # Filter compiler in the nrnivmodl_core_makefile
-        if self.spec.satisfies("+coreneuron"):
-            nrnmakefile = join_path(self.prefix,
+        if self.spec.satisfies("+coreneuron") and self.spec.satisfies("@7.9:"):
+            corenrn_makefile = join_path(self.prefix,
                                     'share/coreneuron/nrnivmodl_core_makefile')
-            filter_file(env['CC'],  self.compiler.cc, nrnmakefile, **kwargs)
-            filter_file(env['CXX'], self.compiler.cxx, nrnmakefile, **kwargs)
+            filter_file(env['CC'], self.compiler.cc, corenrn_makefile, **kwargs)
+            filter_file(env['CXX'], self.compiler.cxx, corenrn_makefile, **kwargs)
 
     # Added because the bin and lib directories are inside x86_64 dir in the
     # installation directory of autotools installation
