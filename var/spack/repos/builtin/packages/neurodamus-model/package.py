@@ -235,7 +235,8 @@ if [ -n "{nrnivmodlcore_call}" ]; then
     done
     {nrnivmodlcore_call} _core_mods
     libpath=$(dirname */libcorenrnmech*)
-    extra_loadflags="-L $(pwd)/$libpath -lcorenrnmech -Wl,-rpath=$(pwd)/$libpath"
+    extra_loadflags="-L $(pwd)/$libpath -lcorenrnmech \\
+            -Wl,-rpath=$(pwd)/$libpath"
 
     echo "Your build supports CoreNeuron. However in some systems
         the coreneuron mods might not be loadable without a location hint.
