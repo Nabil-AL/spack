@@ -9,8 +9,8 @@ class SpatialIndex(PythonPackage):
     """Spatial indexer for geometries and morphologies"""
 
     homepage = "https://bbpgitlab.epfl.ch/hpc/SpatialIndex"
-    git      = "ssh://git@bbpgitlab.epfl.ch:hpc/SpatialIndex.git"
-    url      = "ssh://git@bbpgitlab.epfl.ch:hpc/SpatialIndex.git"
+    git      = "git@bbpgitlab.epfl.ch:hpc/SpatialIndex.git"
+    url      = "git@bbpgitlab.epfl.ch:hpc/SpatialIndex.git"
 
     depends_on("py-setuptools")
     depends_on("cmake")
