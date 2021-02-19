@@ -743,7 +743,10 @@ EOF
     # All BlueBrain packages in specs.txt:
     specs=$(awk '{if (ARGIND == 1) { ours[$1] = 1 } else { split($2, parts, "[ @%~+^]"); if (ours[parts[1]]) { print parts[1] } }}' bluebrain.txt specs.txt)
     # Test only those specs:
-    spack -D "${HOME}/build_environment" test run --log-format junit --log-file "${HOME}/stack-test.xml" ${specs}
+    if [ -n "${specs}" ]
+    then
+        spack -D "${HOME}/build_environment" test run --log-format junit --log-file "${HOME}/stack-test.xml" ${specs}
+    fi
 
     populate_build_cache "${install_start}"
 
