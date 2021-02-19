@@ -739,9 +739,9 @@ EOF
     find "${SPACK_ROOT}/var/spack/repos/builtin/packages" -name package.py|while read fn
     do
         grep -q -e 'bbpcode\|bbpgitlab\|BlueBrain' "${fn}" && echo "$(basename $(dirname ${fn}))" || true
-    done > bluebrain.txt
+    done > "${HOME}/bluebrain.txt"
     # All BlueBrain packages in specs.txt:
-    specs=$(awk '{if (ARGIND == 1) { ours[$1] = 1 } else { split($2, parts, "[ @%~+^]"); if (ours[parts[1]]) { print parts[1] } }}' bluebrain.txt specs.txt)
+    specs=$(awk '{if (ARGIND == 1) { ours[$1] = 1 } else { split($2, parts, "[ @%~+^]"); if (ours[parts[1]]) { print parts[1] } }}' "${HOME}/bluebrain.txt" "${HOME}/specs.txt")
     # Test only those specs:
     if [ -n "${specs}" ]
     then
