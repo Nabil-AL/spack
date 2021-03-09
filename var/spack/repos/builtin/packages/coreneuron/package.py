@@ -33,6 +33,7 @@ class Coreneuron(CMakePackage):
     version('0.14', tag='0.14', submodules=True)
     patch('0001-Fixes-for-NMODL-MOD2C-binary.patch', when='@0.17+nmodl')
 
+    variant('caliper', default=True, description='Enable Caliper based instrumentation')
     variant('debug', default=False, description='Build debug with O0')
     variant('gpu', default=False, description="Enable GPU build")
     variant('knl', default=False, description="Enable KNL specific flags")
@@ -57,6 +58,7 @@ class Coreneuron(CMakePackage):
     depends_on('python', type='build')
 
     depends_on('boost', when='+tests')
+    depends_on('caliper@2.0.1~adiak', when='+caliper')
     depends_on('cuda', when='+gpu')
     depends_on('flex', type='build')
     depends_on('mpi', when='+mpi')
@@ -156,6 +158,10 @@ class Coreneuron(CMakePackage):
 
         if "+legacy-unit" in self.spec:
             options.append('-DCORENRN_ENABLE_LEGACY_UNITS=ON')
+
+        if "+caliper" in self.spec:
+            options.append('-DCORENRN_ENABLE_CALIPER_PROFILING=ON')
+            options.append('-Dcaliper_DIR=%s' % self.spec['caliper'].prefix.share.cmake.caliper)
 
         if spec.satisfies('+nmodl'):
             options.append('-DCORENRN_ENABLE_NMODL=ON')
