@@ -17,10 +17,12 @@ class NeurodamusThalamocortex(NeurodamusModel):
     resource(
         name="thalamus",
         git="ssh://bbpcode.epfl.ch/sim/models/thalamus",
+        tag="1.3"
     )
     resource(
         name="mousify",
         git="ssh://bbpcode.epfl.ch/sim/models/mousify",
+        tag="1.3"
     )
 
     # IMPORTANT: Register versions (only) here to make them stable
@@ -39,4 +41,3 @@ class NeurodamusThalamocortex(NeurodamusModel):
         copy_all('mod/v5', 'mod', make_link)
         copy_all('mod/v6', 'mod', make_link)
         force_remove('mod/optimized')
-
