@@ -43,9 +43,7 @@ class NeurodamusModel(SimModel):
 
     # Version >=1.0 freezes core, but 1.0 is the last to not include -core_v
     # neurodamus models should call `version_from_model_core_deps`
-    depends_on('neurodamus-core@3.0.1', type='build', when='@1.0')
-    depends_on('neurodamus-core@:2.99', type=('build', 'run'), when='@:0.99')
-    depends_on('neurodamus-core@develop', type=('build', 'run'), when='@develop')
+    depends_on('neurodamus-core@develop', type=('build', 'run'))
     depends_on('hdf5+mpi')
     depends_on('reportinglib')
     depends_on('libsonata-report')
@@ -71,7 +69,9 @@ class NeurodamusModel(SimModel):
         if spec.variants['common_mods'].value != 'default':
             shutil.move('common', '_common_orig')
             force_symlink(spec.variants['common_mods'].value, 'common')
-
+        os.system('cd common && git checkout sandbox/savulesc/nrnsig')
+	
+ 
     def build_model(self, spec, prefix):
         """Build and install the bare model.
         """

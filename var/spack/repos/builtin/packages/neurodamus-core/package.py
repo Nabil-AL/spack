@@ -69,6 +69,7 @@ class NeurodamusCore(SimModel):
 
     resource(name='common',
              git='ssh://bbpcode.epfl.ch/sim/models/common',
+             branch='sandbox/savulesc/nrnsig',
              when='+common',
              destination='resources')
 
