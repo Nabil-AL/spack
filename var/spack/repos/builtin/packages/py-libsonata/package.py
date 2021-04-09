@@ -12,6 +12,7 @@ class PyLibsonata(PythonPackage):
     homepage = "https://github.com/BlueBrain/libsonata"
     git = "https://github.com/BlueBrain/libsonata.git"
 
+    version('0.1.9', branch='sandbox/srivas/type_error', submodules=True, get_full_repo=True)
     version('0.1.8', tag='v0.1.8', submodules=True, get_full_repo=True)
     version('0.1.6', tag='v0.1.6', submodules=True, get_full_repo=True)
     version('0.1.5', tag='v0.1.5', submodules=True, get_full_repo=True)
@@ -23,7 +24,7 @@ class PyLibsonata(PythonPackage):
     depends_on('cmake@3.3:', type='build')
     depends_on('hdf5')
     depends_on('py-pybind11')
-
+    depends_on('mpi')
     depends_on('py-numpy@1.12:', type=('build', 'run'))
     depends_on('py-setuptools', type='build', when='@0.1:')
     depends_on('py-setuptools-scm', type='build', when='@0.1:')
