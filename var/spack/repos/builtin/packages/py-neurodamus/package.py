@@ -13,6 +13,7 @@ class PyNeurodamus(PythonPackage):
     git      = "ssh://bbpcode.epfl.ch/sim/neurodamus-py"
 
     version('develop', branch='master')
+    version('2.5.0',   tag='2.5.0')
     version('2.4.0',   tag='2.4.0')
     version('2.3.1',   tag='2.3.1')
     version('2.3.0',   tag='2.3.0')
@@ -39,7 +40,7 @@ class PyNeurodamus(PythonPackage):
     depends_on('py-docopt',        type='run')
     depends_on('py-lazy-property', type='run', when='@:1.0.0')
     depends_on('py-six',           type='run', when='@:1.0.0')
-    depends_on('py-morphio+mpi',   type='run', when='@develop')
+    depends_on('py-morphio',       type='run', when='@develop')
 
     @run_after('install')
     def install_scripts(self):

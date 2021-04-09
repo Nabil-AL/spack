@@ -8,7 +8,7 @@ spack:
     - matrix:
         - [
             coreneuron,
-            coreneuron+debug,
+            coreneuron build_type=Debug,
             hdf5+mpi,
             highfive+mpi,
             neuron,
@@ -43,8 +43,8 @@ spack:
     - mvdtool+mpi
     - neuron+mpi~debug%intel
     - nlohmann-json +single_header
-    - omega-h+trilinos@9.33.0.dev1
-    - omega-h+gmsh+trilinos@9.33.0.dev1
+    - omega-h+trilinos
+    - omega-h+gmsh+trilinos
     - openscenegraph build_type=Release
     - parmetis
     - petsc~int64+mpi
@@ -59,6 +59,7 @@ spack:
     - py-cached-property
     - py-cffi
     - py-cfgv
+    - py-cgal-pybind
     - py-click
     - py-clustershell
     - py-cmake-format
@@ -107,13 +108,14 @@ spack:
     - py-pre-commit
     - py-progress
     - py-py4j
-    - py-pyarrow+parquet@0.15.1
+    - py-pyarrow+parquet
     - py-pylru
-    - py-pyspark@3.0.0
+    - py-pyspark
     - py-pytest
     - py-pyyaml
     - py-regex
     - py-requests
+    - py-rtree
     - py-scikit-learn
     - py-scipy
     - py-seaborn
@@ -138,6 +140,6 @@ spack:
     - range-v3
     - rockets
     - rocksdb~static
-    - spark@3.0.0
+    - spark
     - sundials+int64
     - superlu-dist@5.4.0

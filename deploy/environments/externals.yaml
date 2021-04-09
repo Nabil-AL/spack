@@ -23,6 +23,7 @@ spack:
   specs:
     - llvm@11.0.0 +python
     - nvhpc@20.9 install_type=network
+    - nvhpc@21.2 install_type=network
     - arm-forge@20.2.0-Redhat-7.0-x86_64
     - blender
     - boost~mpi@1.73.0
@@ -32,7 +33,7 @@ spack:
     - cli-tools
     - cmake@3.15.7
     - cuda@10.1.243
-    - cuda@11.1.0
+    - cuda@11.0.2
     - cudnn@7.3.0.29-9.0-linux-x64
     - darshan-runtime
     - darshan-util

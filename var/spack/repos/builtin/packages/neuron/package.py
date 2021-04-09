@@ -102,6 +102,7 @@ class Neuron(CMakePackage):
     depends_on("gettext")
 
     depends_on("mpi",         when="+mpi")
+    depends_on("py-mpi4py",   when="+mpi+python+tests")
     depends_on("ncurses",     when="~cross-compile")
     depends_on("python@2.6:", when="+python", type=("build", "link", "run"))
     depends_on("py-pytest",   when="+python+tests")
@@ -136,7 +137,8 @@ class Neuron(CMakePackage):
                                                              "+tests"]]
         if "+mpi" in self.spec:
             args.append("-DNRN_ENABLE_MPI=ON")
-            args.append("-DNRN_ENABLE_MPI_DYNAMIC=ON")
+            if "~coreneuron" in self.spec:
+                args.append("-DNRN_ENABLE_MPI_DYNAMIC=ON")
         else:
             args.append("-DNRN_ENABLE_MPI=OFF")
         if "+python" in self.spec:
