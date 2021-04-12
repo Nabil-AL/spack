@@ -1,0 +1,62 @@
+From d55a3a4c3cfde05b42e97a1d6c0fb26646a28414 Mon Sep 17 00:00:00 2001
+From: Ioannis Magkanaris <iomagkanaris@gmail.com>
+Date: Mon, 12 Apr 2021 16:19:05 +0200
+Subject: [PATCH] Revert changes in import3d_gui for rx3d
+
+---
+ share/lib/hoc/import3d/import3d_gui.hoc | 8 +++-----
+ share/lib/python/neuron/__init__.py     | 8 ++------
+ 2 files changed, 5 insertions(+), 11 deletions(-)
+
+diff --git a/share/lib/hoc/import3d/import3d_gui.hoc b/share/lib/hoc/import3d/import3d_gui.hoc
+index 935748b..5eb0ec9 100755
+--- a/share/lib/hoc/import3d/import3d_gui.hoc
++++ b/share/lib/hoc/import3d/import3d_gui.hoc
+@@ -1105,6 +1105,9 @@ proc instantiate() {local i, j, min, haspy, ispycontext, keepCommands  localobj
+ 		zz = sec.raw.getrow(2).c(j)
+ 		dd = sec.d.c(j)
+ 		if (sec.iscontour_) {
++            if (haspy) {
++                pyobj.neuron._declare_contour(sec, tstr)
++            }
+             // ensure stk_triang_vec available if needed (necessary for soma stack case)
+             sec.pl_diam_mk_stk_triang_vec()
+ 			contour2centroid(xx, yy, zz, dd, sec)
+@@ -1119,11 +1122,6 @@ proc instantiate() {local i, j, min, haspy, ispycontext, keepCommands  localobj
+ 			    commands.append(new String(tstr1))
+             }
+ 		}
+-        if (sec.iscontour_) {
+-            if (haspy) {
+-                pyobj.neuron._declare_contour(sec, $o1, tstr)
+-            }
+-        }
+ 	}
+ 
+ 	for i = 0, commands.count -1 {
+diff --git a/share/lib/python/neuron/__init__.py b/share/lib/python/neuron/__init__.py
+index 751f1dc..24a46d5 100644
+--- a/share/lib/python/neuron/__init__.py
++++ b/share/lib/python/neuron/__init__.py
+@@ -657,16 +657,12 @@ def _modelview_mechanism_docstrings(dmech, tree):
+ # TODO: put this someplace else
+ #       can't be in rxd because that would break things if no scipy
+ _sec_db = {}
+-def _declare_contour(secobj, obj, name):
+-    array, i = _parse_import3d_name(name)
+-    sec = getattr(obj, array)[i]
++def _declare_contour(secobj, secname):
+     j = secobj.first
+     center_vec = secobj.contourcenter(secobj.raw.getrow(0), secobj.raw.getrow(1), secobj.raw.getrow(2))
+     x0, y0, z0 = [center_vec.x[i] for i in range(3)]
+-    # store a couple of points to check if the section has been moved
+-    pts = [(sec.x3d(i),sec.y3d(i),sec.z3d(i)) for i in [0, sec.n3d()-1]] 
+     # (is_stack, x, y, z, xcenter, ycenter, zcenter)
+-    _sec_db[sec.hoc_internal_name()] = (True if secobj.contour_list else False, secobj.raw.getrow(0).c(j), secobj.raw.getrow(1).c(j), secobj.raw.getrow(2).c(j), x0, y0, z0, pts)
++    _sec_db[secname] = (True if secobj.contour_list else False, secobj.raw.getrow(0).c(j), secobj.raw.getrow(1).c(j), secobj.raw.getrow(2).c(j), x0, y0, z0)
+ 
+ def _create_all_list(obj):
+     # used by import3d
+-- 
+1.8.3.1
+

@@ -30,6 +30,9 @@ class Neuron(CMakePackage):
     # Patch which reverts d9605cb for not hanging on ExperimentalMechComplex
     patch("apply_79a4d2af_load_balance_fix.patch", when="@7.8.0b")
     patch("fix_brew_py_18e97a2d.patch", when="@7.8.0c")
+    # Patch import3d_gui function to fix regression added in neuron master
+    # commit bf3bcabeb5877735652a73cfd02aa4f9a27d8481
+    patch("revert-changes-in-import3d_gui-for-rx3d.patch", when="@develop")
 
     version("develop", branch="master")
     version("8.0a",  tag="8.0a", preferred=True)
