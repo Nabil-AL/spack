@@ -66,9 +66,9 @@ def filter_shebang(path):
     with open(path, 'rb') as original_file:
         original = original_file.read()
         if sys.version_info >= (2, 7):
-            original = original.decode(encoding='UTF-8')
+            original = original.decode(encoding='en_US.UTF-8')
         else:
-            original = original.decode('UTF-8')
+            original = original.decode('en_US.UTF-8')
 
     # This line will be prepended to file
     new_sbang_line = '%s\n' % sbang_shebang_line()
@@ -101,11 +101,11 @@ def filter_shebang(path):
 
     with open(path, 'wb') as new_file:
         if sys.version_info >= (2, 7):
-            new_file.write(new_sbang_line.encode(encoding='UTF-8'))
-            new_file.write(original.encode(encoding='UTF-8'))
+            new_file.write(new_sbang_line.encode(encoding='en_US.UTF-8'))
+            new_file.write(original.encode(encoding='en_US.UTF-8'))
         else:
-            new_file.write(new_sbang_line.encode('UTF-8'))
-            new_file.write(original.encode('UTF-8'))
+            new_file.write(new_sbang_line.encode('en_US.UTF-8'))
+            new_file.write(original.encode('en_US.UTF-8'))
 
     # Restore original permissions.
     if saved_mode is not None:

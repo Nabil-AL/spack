@@ -40,7 +40,7 @@ class FDCapture:
         self.targetfd = targetfd
         if tmpfile is None and targetfd != 0:
             f = tempfile.TemporaryFile('wb+')
-            tmpfile = dupfile(f, encoding="UTF-8")
+            tmpfile = dupfile(f, encoding="en_US.UTF-8")
             f.close()
         self.tmpfile = tmpfile
         self._savefd = os.dup(self.targetfd)

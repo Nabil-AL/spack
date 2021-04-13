@@ -371,10 +371,10 @@ def parse_time_with_missing_year(timestr):
 
 class PathEntry:
     def __init__(self, ppart):
-        self.strpath = ppart.firstChild.nodeValue.encode('UTF-8')
-        self.action = ppart.getAttribute('action').encode('UTF-8')
+        self.strpath = ppart.firstChild.nodeValue.encode('en_US.UTF-8')
+        self.action = ppart.getAttribute('action').encode('en_US.UTF-8')
         if self.action == 'A':
-            self.copyfrom_path = ppart.getAttribute('copyfrom-path').encode('UTF-8')
+            self.copyfrom_path = ppart.getAttribute('copyfrom-path').encode('en_US.UTF-8')
             if self.copyfrom_path:
                 self.copyfrom_rev = int(ppart.getAttribute('copyfrom-rev'))
 

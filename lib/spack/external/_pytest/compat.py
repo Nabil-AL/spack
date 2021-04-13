@@ -309,11 +309,11 @@ else:
         def __init__(self):
             super(CaptureIO, self).__init__(
                 io.BytesIO(),
-                encoding='UTF-8', newline='', write_through=True,
+                encoding='en_US.UTF-8', newline='', write_through=True,
             )
 
         def getvalue(self):
-            return self.buffer.getvalue().decode('UTF-8')
+            return self.buffer.getvalue().decode('en_US.UTF-8')
 
 
 class FuncargnamesCompatAttr(object):
