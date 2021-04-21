@@ -18,8 +18,9 @@ class Coreneuron(CMakePackage):
     url      = "https://github.com/BlueBrain/CoreNeuron"
     git      = "https://github.com/BlueBrain/CoreNeuron"
 
-    version('develop', branch='master', submodules=True)
-    version('1.0b', branch="sandbox/srivas/ime-workshop", submodules=True, preferred=True)
+    version('develop', branch='master')
+    version('1.0c', branch="sandbox/srivas/ime-workshop", submodules=True, preferred=True)
+    version('1.0b', tag="1.0b", submodules=True)
     version('1.0a', commit="857551a", submodules=True)
     version('0.23b', commit="be131ec", submodules=True)
     version('0.22', tag='0.22', submodules=True)
@@ -91,7 +92,7 @@ class Coreneuron(CMakePackage):
     # enabled OpenMP, OpenACC and Reporting. Disable ReportingLib for GPU", but
     # with the contemporary develop version it seems to work. Encode this
     # knowledge as a conflict between +report and +gpu for older versions.
-    conflicts('+report', when='coreneuron@:1.0a+gpu+openmp')
+    conflicts('+report', when='coreneuron@:1.0b+gpu+openmp')
 
     # raise conflict when trying to install '+gpu' without PGI compiler
     gpu_compiler_message = "For gpu build use %pgi or %nvhpc"

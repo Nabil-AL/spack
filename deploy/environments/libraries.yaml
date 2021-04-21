@@ -105,6 +105,7 @@ spack:
     - py-pip
     - py-plotly
     - py-ply
+    - py-poisson-recon-pybind
     - py-pre-commit
     - py-progress
     - py-py4j
@@ -143,3 +144,4 @@ spack:
     - spark
     - sundials+int64
     - superlu-dist@5.4.0
+    - synapsetool
