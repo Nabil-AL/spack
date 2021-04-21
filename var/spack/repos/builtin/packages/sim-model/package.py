@@ -114,7 +114,9 @@ class SimModel(Package):
         nrnivmodl_params = self._nrnivmodlcore_params(include_flag, link_flag)
         with working_dir('build_' + self.mech_name, create=True):
             force_symlink(mods_location, 'mod')
+            os.rename(mods_location + "/adex.mod", mods_location + "/adex.mod.txt")
             which('nrnivmodl-core')(*(nrnivmodl_params + ['mod']))
+            os.rename(mods_location + "/adex.mod.txt", mods_location + "/adex.mod")
             output_dir = os.path.basename(self.nrnivmodl_outdir)
             mechlib = find_libraries('libcorenrnmech' + self.lib_suffix + '*',
                                      output_dir)
@@ -145,7 +147,7 @@ class SimModel(Package):
         prefix = self.prefix
 
         if self.spec.satisfies('+coreneuron'):
-            with working_dir('build_' + mech_name):
+            with working_dir('build_' + mech_name) as work_dir:
                 if self.spec.satisfies('^coreneuron@0.0:0.14'):
                     raise Exception('Coreneuron versions before 0.14 are'
                                     'not supported by Neurodamus model')
@@ -153,7 +155,9 @@ class SimModel(Package):
                     which('nrnivmech_install.sh', path=".")(prefix)
                 else:
                     # Set dest to install
+                    os.rename(os.getcwd()+"/mod/adex.mod", os.getcwd()+"/mod/adex.mod.txt")
                     which('nrnivmodl-core')("-d", prefix, 'mod')
+                    os.rename(os.getcwd()+"/mod/adex.mod.txt", os.getcwd()+"/mod/adex.mod")
 
         # Install special
         shutil.copy(join_path(arch, 'special'), prefix.bin)

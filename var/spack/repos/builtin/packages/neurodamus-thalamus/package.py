@@ -27,6 +27,7 @@ class NeurodamusThalamus(NeurodamusModel):
     version_from_model_core_deps(model_core_dep_v)
 
     version('develop', branch='master', submodules=True, get_full_repo=False)
+    version('adex', branch='sandbox/magkanar/pointneuron_merge', submodules=True, get_full_repo=False)
     version('1.0', tag='1.0', submodules=True, get_full_repo=False)
     version('0.3', tag='0.3-1', submodules=True, get_full_repo=False)
     version('0.2', tag='0.2', submodules=True, get_full_repo=False)
