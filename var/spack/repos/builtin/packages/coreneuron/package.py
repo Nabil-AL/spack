@@ -127,6 +127,8 @@ class Coreneuron(CMakePackage):
         # is activated from random123 which results in compilation error
         if '+profile' in spec:
             flags += ' -DTAU -DR123_USE_GNU_UINT128=0'
+        if '+gpu' in spec:
+            flags += ' -ta=tesla:noflushz,nofma -O1'
         return flags
 
     def get_cmake_args(self):
