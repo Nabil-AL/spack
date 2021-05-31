@@ -48,7 +48,9 @@ modules:
       - neurodamus-mousify
       - parquet-converters
       - placement-algorithm
+      - py-region-grower
       - psp-validation
+      - py-atlas-building-tools
       - py-basalt
       - py-bbp-analysis-framework
       - py-bbp-workflow
@@ -57,6 +59,8 @@ modules:
       - py-bluepyefe
       - py-bluepymm
       - py-bluepyopt
+      - py-bluepyemodel
+      - py-bluepyparallel
       - py-bluepysnap
       - py-currentscape
       - py-efel
@@ -71,6 +75,7 @@ modules:
       - py-simwriter
       - py-sonata-network-reduction
       - py-pytouchreader
+      - py-visual-cortex-analysis
       - regiodesics
       - reportinglib
       - spatial-index
@@ -84,9 +89,11 @@ modules:
       - '%gcc'
       - '%intel'
       - '%clang'
+      - '%nvhpc'
       - '%pgi'
     projections:
       all: '{name}/{version}'
+      ^spark@3.0.0: '{name}/{version}-spark3.0'
       ^coreneuron+knl: '{name}-knl/{version}'
       +common: '{name}/{version}-commonmods'
     all:
