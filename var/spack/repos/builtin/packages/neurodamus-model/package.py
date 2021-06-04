@@ -86,7 +86,8 @@ class NeurodamusModel(SimModel):
     def build_model(self, spec, prefix):
         """Build and install the bare model.
         """
-        # NGV must overwrite other mods, even from the specific models, e.g. ProbAMPANMDA
+        # NGV must overwrite other mods, even from the specific
+        # models, e.g. ProbAMPANMDA
         if spec.satisfies("+ngv"):
             copy_all("ngv/common/mod/ngv", "mod")
 
