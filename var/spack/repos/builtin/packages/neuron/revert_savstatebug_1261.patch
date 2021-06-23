@@ -1,0 +1,121 @@
+From 201a41d683c6ac3085a090bbc9bd2cba9636a632 Mon Sep 17 00:00:00 2001
+From: Ioannis Magkanaris <iomagkanaris@gmail.com>
+Date: Wed, 23 Jun 2021 11:28:33 +0200
+Subject: [PATCH] Revert "Savstatebug (#1261)"
+
+This reverts commit 6a9868e8ccdd6c705d5650fabf6d09f823d65b82.
+---
+ src/nrniv/bbsavestate.cpp |  4 ----
+ src/nrniv/savstate.cpp    |  4 ----
+ test/rxd/conftest.py      | 19 ++++++++++++++++---
+ 3 files changed, 16 insertions(+), 11 deletions(-)
+
+diff --git a/src/nrniv/bbsavestate.cpp b/src/nrniv/bbsavestate.cpp
+index b6c32ac32..54b55591d 100644
+--- a/src/nrniv/bbsavestate.cpp
++++ b/src/nrniv/bbsavestate.cpp
+@@ -183,7 +183,6 @@ callback to bbss_early when needed.
+ #include "tqueue.h"
+ #include "netcon.h"
+ #include "vrecitem.h"
+-#include "nrniv_mf.h"
+ 
+ // on mingw, OUT became defined
+ #undef IN
+@@ -974,7 +973,6 @@ static void ssi_def() {
+ 	Symbol* s = hoc_lookup("NetCon");
+ 	nct = s->u.ctemplate;
+ 	ssi = new StateStructInfo[n_memb_func];
+-	assert(v_structure_change == 0);
+ 	for (int im=0; im < n_memb_func; ++im) {
+ 		ssi[im].offset = -1;
+ 		ssi[im].size = 0;
+@@ -1025,8 +1023,6 @@ static void ssi_def() {
+         }
+ 	    delete np;
+ 	}
+-	// Following set to 1 when NrnProperty constructor calls prop_alloc.
+-	v_structure_change = 0;
+ }
+ 
+ // if we know the Point_process, we can find the NetCon
+diff --git a/src/nrniv/savstate.cpp b/src/nrniv/savstate.cpp
+index a1b14e708..a1105243b 100644
+--- a/src/nrniv/savstate.cpp
++++ b/src/nrniv/savstate.cpp
+@@ -6,7 +6,6 @@
+ #include "nrnoc2iv.h"
+ #include "classreg.h"
+ #include "ndatclas.h"
+-#include "nrniv_mf.h"
+ 
+ #include "tqueue.h"
+ #include "netcon.h"
+@@ -222,7 +221,6 @@ void SaveState::ssi_def() {
+ 	Symbol* s = hoc_lookup("NetCon");
+ 	nct = s->u.ctemplate;
+ 	ssi = new StateStructInfo[n_memb_func];
+-	assert(v_structure_change == 0);
+ 	for (int im=0; im < n_memb_func; ++im) {
+ 		ssi[im].offset = -1;
+ 		ssi[im].size = 0;
+@@ -256,8 +254,6 @@ void SaveState::ssi_def() {
+ 	    }
+ 	    delete np;
+ 	}
+-	// Following set to 1 when NrnProperty constructor calls prop_alloc.
+-	v_structure_change = 0;
+ }
+ 
+ bool SaveState::check(bool warn) {
+diff --git a/test/rxd/conftest.py b/test/rxd/conftest.py
+index 12b33b893..f45dcde52 100644
+--- a/test/rxd/conftest.py
++++ b/test/rxd/conftest.py
+@@ -31,8 +31,12 @@ def neuron_import(request):
+ 
+ 
+ @pytest.fixture
+-def neuron_nosave_instance(neuron_import):
+-    """Sets/Resets the rxd test environment."""
++def neuron_instance(neuron_import):
++    """Sets/Resets the rxd test environment.
++
++    Provides 'data', a dictionary used to store voltages and rxd node
++    values for comparisons with the 'correct_data'.
++    """
+ 
+     h, rxd, save_path = neuron_import
+     h.load_file("stdrun.hoc")
+@@ -53,7 +57,11 @@ def neuron_nosave_instance(neuron_import):
+     h.dt = 0.025
+     h.stoprun = False
+ 
+-    yield (h, rxd, save_path)
++    def gather():
++        return collect_data(h, rxd, data, save_path)
++
++    cvode.extra_scatter_gather(0, gather)
++    yield (h, rxd, data, save_path)
+     for r in rxd.rxd._all_reactions[:]:
+         if r():
+             rxd.rxd._unregister_reaction(r)
+@@ -74,6 +82,7 @@ def neuron_nosave_instance(neuron_import):
+     rxd.species._has_3d = False
+     rxd.rxd._zero_volume_indices = numpy.ndarray(0, dtype=numpy.int_)
+     rxd.set_solve_type(dimension=1)
++<<<<<<< HEAD
+ 
+ 
+ @pytest.fixture
+@@ -95,3 +104,7 @@ def neuron_instance(neuron_nosave_instance):
+     yield (h, rxd, data, save_path)
+ 
+     cvode.extra_scatter_gather_remove(gather)
++=======
++    cvode.extra_scatter_gather_remove(gather)
++    
++>>>>>>> parent of 6a9868e8c... Savstatebug (#1261)
+-- 
+2.25.1
+
