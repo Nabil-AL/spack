@@ -17,6 +17,7 @@ stages:
     - if: '$CI_COMMIT_REF_NAME == "transition-g2g"'  # $CI_DEFAULT_BRANCH
       when: always
     - when: never
+  tags: [bb5_map]
 
 prepare_spack:
   extends: .spack_job
