@@ -5,17 +5,20 @@ stages:
   - applications
   - checks
 
-prep_default_env:
-  stage: setup
-  script:
-    - echo "DEPLOYMENT_ROOT=${PWD}" >> deployment.env
-  artifacts:
-    when: always
-    paths: [deployment.env]
-    reports:
-      dotenv: deployment.env
+.spack_job:
+  variables:
+    DEPLOYMENT_ROOT: "/gpfs/bbp.cscs.ch/ssd/apps/hpc/jenkins"
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "transition-g2g"'  # $CI_DEFAULT_BRANCH
+      when: always
+    - if: '$CI_MERGE_REQUEST_SOURCE_BRANCH_NAME'
+      variables:
+        DEPLOYMENT_ROOT: "/gpfs/bbp.cscs.ch/ssd/apps/hpc/jenkins/pulls/$CI_MERGE_REQUEST_IID"
+      when: always
+    - when: never
 
-compilers:
-  stage: compilers
+prepare_spack:
+  extends: .spack_job
+  stage: setup
   script:
     - env|grep DEPLOYMENT_
