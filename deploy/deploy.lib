@@ -6,9 +6,6 @@
 #
 # * `DEPLOYMENT_ROOT` for the installation directory
 # * `DEPLOYMENT_DATA` containing tarballs of proprietary software
-# * `DEPLOYMENT_DATE` to force a date for the installation directory
-
-DEFAULT_DEPLOYMENT_DATE=${DEFAULT_DEPLOYMENT_DATE:-$(date +%Y-%m-%d)}
 
 BASE_GCC_VERSION=${DEFAULT_BASE_GCC_VERSION:-9.3.0}
 
@@ -78,12 +75,11 @@ install_dir_raw() {
     # Create an installation directory name based on the environment
     # variables set.
     what=$1
-    date="${DEPLOYMENT_DATE:-${DEFAULT_DEPLOYMENT_DATE}}"
-    name="${DEPLOYMENT_ROOT}/deploy/${what}/${date}"
+    name="${DEPLOYMENT_ROOT}/install_${what}"
     echo "${name}"
 }
 
-install_dir_name() {
+install_dir() {
     # Create an installation directory name based on the environment
     # variables set. Resovles any symlinks.
     what=$1
@@ -95,85 +91,12 @@ install_dir_name() {
     fi
 }
 
-set_latest() {
-    # Set the "latest" symlink to the current deployment date
-    what=$1
-    source="$(install_dir_name ${what})"
-    local OLD_DEPLOYMENT_DATE="${DEPLOYMENT_DATE}"
-    DEPLOYMENT_DATE="latest"
-    target="$(install_dir_raw ${what})"
-    DEPLOYMENT_DATE="${OLD_DEPLOYMENT_DATE}"
-    if [[ -e "${target}" && ! -L "${target}" ]]; then
-        log "link target is not a symlink: ${target}"
-        return 1
-    elif [[ "${source}" = "${target}" ]]; then
-        log "cannot link to itself: ${source}"
-        log "returning!"
-        return 0
-    elif [[ ! -d "${source}" ]]; then
-        log "link source is not a directory: ${source}"
-        return 1
-    fi
-    log "creating symlink for ${what}"
-    log "...from ${source}"
-    log "...to   ${target}"
-    rm -f "${target}"
-    ln -s "${source}" "${target}"
-}
-
-install_dir() {
-    # Create an installation directory based on the environment variables
-    # set.
-    #
-    # When DEPLOYMENT_DATE is set to "latest" and the corresponding symlink
-    # does not resolve/is not existing, find the last installation
-    # directory and symlink it to "latest".
-    what=$1
-    date="${DEPLOYMENT_DATE:-${DEFAULT_DEPLOYMENT_DATE}}"
-    name="$(install_dir_name ${what})"
-    if [[ ! -e "${name}" && "${date}" = "latest" ]]; then
-        log "creating symlink for ${date}"
-        target=$(last_install_dir ${what})
-        if [[ ! -d "${target}" ]]; then
-            DEPLOYMENT_DATE=${DEFAULT_DEPLOYMENT_DATE}
-            target="$(install_dir_name ${what})"
-            log "...creating ${target}"
-            mkdir -p "${target}"
-        fi
-        log "...from ${target}"
-        log "...to   ${name}"
-        ln -sf "${target}" "${name}"
-    fi
-
-    if [[ -L "${name}" ]]; then
-        echo "$(readlink -f ${name})"
-    else
-        echo "${name}"
-    fi
-}
-
-last_install_dir() {
-    # Obtain the installation directory of a parental stage, i.e.,
-    # compilers when building tools. Based on some assumptions:
-    #
-    # 1. Attempt to use the globally set `DEPLOYMENT_DATE` or default via
-    #    `install_dir`
-    # 2. Otherwise, use the latest directory present
-    what=$1
-    name="$(install_dir_name ${what})"
-    parent="$(dirname ${name})"
-    if [[ ! -d "${name}" && -d "${parent}" ]]; then
-        name=$(find "${parent}" -mindepth 1 -maxdepth 1 -type d|sort|tail -n1)
-    fi
-    echo "$(readlink -f ${name})"
-}
-
 list_module_paths() {
     # Print all module paths up to and including the stage passed as first
     # argument
     local what="$1"
     for stage in ${stages}; do
-        local base="$(last_install_dir ${stage})"
+        local base="$(install_dir ${stage})"
         for modpath in ${base}/modules/tcl/*; do
             if [[ -d "${modpath}" ]]; then
                 echo "${modpath}"
@@ -254,9 +177,9 @@ update_chain_config() {
             log "...adding ${stage}"
             cat << EOF
   ${stage}${suffix}:
-    install_tree: $(last_install_dir ${stage})
+    install_tree: $(install_dir ${stage})
     modules:
-      tcl: $(last_install_dir ${stage})/modules/tcl
+      tcl: $(install_dir ${stage})/modules/tcl
 EOF
         done
     fi
@@ -267,108 +190,7 @@ configure_compilers() {
     # have been generated!
     local what="$1"
     update_module_path "${what}" "yes"
-    while read -r line; do
-        sha="${line%% *}"  # Remove everything after and including the first space
-        spec="${line#* }"  # Remove everything up to and including the first space
-        set +o nounset
-        env_mods=""
-
-
-        # Skip all but compilers. Compiler variants need to be specified
-        # *after* the version specification!
-        case "${spec}" in
-            gcc@*)
-                ;;
-            intel@*)
-                ;;
-            intel-parallel-studio@*)
-                ;;
-            llvm@*)
-                ;;
-            nvhpc@*)
-                ;;
-            pgi@*)
-                ;;
-            *)
-                continue
-                ;;
-        esac
-
-        # When a compiler is compiled with *anything but the base
-        # compiler*, it's module will not be generated in the initial
-        # module refresh
-        #
-        # As the input should be sorted by compilers, the module generation
-        # will now find the compilers that were used when bootstrapping.
-        log "...processing ${line}"
-        cmd=$(spack module tcl loads ${sha}|tail -n 1)
-        echo "${cmd}"
-        ${cmd}
-        set -o nounset
-        if [[ ${spec} != *"intel-parallel-studio"* ]]; then
-            spack compiler find --scope=user
-        fi
-
-        GCC_DIR=$(spack location --install-dir gcc@${BASE_GCC_VERSION})
-        log "...using gcc ${BASE_GCC_VERSION} from ${GCC_DIR}"
-        if [[ ${spec} = *"intel"* ]]; then
-            # update intel modules to use newer gcc in .cfg files
-            INTEL_DIR=$(spack location --install-dir ${sha})
-            if [[ "${INTEL_DIR}" != "${SPACK_INSTALL_PREFIX}"* ]]; then
-                log "...installation does not match install prefix, skipping modification of files"
-            fi
-            for f in $(find ${INTEL_DIR} -name "icc.cfg" -o -name "icpc.cfg" -o -name "ifort.cfg"); do
-                if ! grep -q "${GCC_DIR}" $f; then
-                    echo "-gcc-name=${GCC_DIR}/bin/gcc" >> ${f}
-                    echo "-Xlinker -rpath=${GCC_DIR}/lib" >> ${f}
-                    echo "-Xlinker -rpath=${GCC_DIR}/lib64" >> ${f}
-                    log "updated ${f} with newer GCC"
-                fi
-            done
-        elif [[ ${line} = *"pgi"* || ${line} = *"nvhpc"* ]]; then
-            #update pgi modules for network installation
-            PGI_DIR=$(dirname $(which makelocalrc))
-            PGI_TMPDIR=$(mktemp -d -p .)
-            makelocalrc ${PGI_DIR} -d "${PGI_TMPDIR}" -gcc ${GCC_DIR}/bin/gcc -gpp ${GCC_DIR}/bin/g++ -g77 ${GCC_DIR}/bin/gfortran -x -net
-            #configure pgi network license
-            template=$(ls -rt "${PGI_TMPDIR}"/localrc* | tail -n 1)
-            echo "set PREOPTIONS=-D__GCC_ATOMIC_TEST_AND_SET_TRUEVAL=1;" >> "${template}"
-            log "NVIDIA localrc template"
-            cat "${template}"
-            compute_nodes=$(sinfo -h -N -o %n | sort -u)
-            if [[ "${PGI_DIR}" != "${SPACK_INSTALL_PREFIX}"* ]]; then
-                log "...installation does not match install prefix, skipping modification of files"
-            else
-                for node in bbpv1 bbpv2 bbptadm tds03 tds04 ${compute_nodes}; do
-                    cp $template $PGI_DIR/localrc.$node || true
-                done
-            fi
-            rm -rf "${PGI_TMPDIR}"
-        fi
-        cmd=${cmd/load/unload}
-        echo "${cmd}"
-        ${cmd}
-
-        cmd=${cmd/unload/show/}
-        full_module_path="$(${cmd}|&sed -ne '2{s/:$// p}')"
-        spec=${spec%%[+ ]*}             # truncate variants
-        spec=${spec/llvm/clang}         # LLVM identifies as clang
-        spec=${spec/20.0.2/19.1.2.254}  # Intel identifies as an older version
-        # Remove empty module definitions, as they may appear anywhere
-        # under the compiler key. Further, purge some garbage where clang's
-        # spec spans multiple lines with a quote in front.
-        #
-        # After removing all unnecessary stuff, re-add the appropriate
-        # module definition with a full path.
-        sed -i -e '
-            /modules: \[\]/ d;
-            /^\s*Target:.\s*$/ d;
-            /^\s*$/ d;
-            s#spec: .clang#spec: clang#
-            s#\( *\)spec: '"${spec}"'#&\n\1modules: ['"${full_module_path}"']#' ${HOME}/.spack/compilers.yaml
-    done
-
-    sed  -i 's#.*f\(77\|c\): null#      f\1: /usr/bin/gfortran#' ${HOME}/.spack/compilers.yaml
+    configure-compilers
 }
 
 setup_mirror() {
@@ -488,7 +310,7 @@ copy_configuration() {
 
     if [[ ${spec_parentage[${what}]+_} ]]; then
         parent="${spec_parentage[$what]}"
-        pdir="$(last_install_dir ${parent})"
+        pdir="$(install_dir ${parent})"
         log "...using configuration output of ${parent}"
         if [[ -f "${pdir}/data/packages.yaml" ]]; then
             log "      copying packages.yaml"

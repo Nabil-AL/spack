@@ -1,0 +1,11 @@
+# GitLab has no scheduling concept on the pipeline level, see
+# https://gitlab.com/gitlab-org/gitlab/-/issues/16548
+#
+# This is just a workaround to at least guarantee that no two (now child)
+# pipelines run at the same time. SNAFU
+deploy:
+  stage: deploy
+  trigger:
+    include: deploy/gitlab-ci.yml
+    strategy: depend
+  resource_group: BlueBrainGPFS

@@ -1,13 +1,5 @@
 config:
   install_tree:
-    root: $SPACK_INSTALL_PREFIX
     projections:
-      all: ${ARCHITECTURE}/${COMPILERNAME}-${COMPILERVER}/${PACKAGE}-${VERSION}-${HASH:6}
-  source_cache: $SPACK_INSTALL_PREFIX/.cache
-  module_roots:
-    tcl: $SPACK_INSTALL_PREFIX/modules/tcl
-    lmod: $SPACK_INSTALL_PREFIX/modules/lmod
-  build_stage:
-  - $tempdir
-  - $SPACK_INSTALL_PREFIX/.stage
+      all: ${COMPILERNAME}-${COMPILERVER}/${PACKAGE}-${VERSION}-${HASH:6}
   build_jobs: 12

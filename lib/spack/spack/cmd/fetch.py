@@ -77,7 +77,11 @@ def fetch(parser, args):
                 if package.spec.external:
                     continue
 
-                package.do_fetch()
+                try:
+                    package.do_fetch()
+                except Exception as err:
+                    tty.warn("Encountered exception while fetching %s", spec.name)
+                    raise err
 
         package = spack.repo.get(spec)
         package.do_fetch()
