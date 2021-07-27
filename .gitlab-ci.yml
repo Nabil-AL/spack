@@ -1,4 +1,21 @@
-test:
+stages:
+  - setup
+  - compilers
+  - externals
+  - applications
+  - checks
+
+prep_default_env:
+  stage: setup
   script:
-    - echo "Test"
-    - env
+    - echo "DEPLOYMENT_ROOT=${PWD}" >> deployment.env
+  artifacts:
+    when: always
+    paths: [deployment.env]
+    reports:
+      dotenv: deployment.env
+
+compilers:
+  stage: compilers
+  script:
+    - env|grep DEPLOYMENT_
