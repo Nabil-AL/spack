@@ -1,0 +1,37 @@
+spack:
+  view: false
+  concretization: separately
+  modules:
+    tcl:
+      whitelist:
+        - py-atlalign
+        - py-atlannot
+        - py-atldld
+  packages:
+    all:
+      compiler: [gcc@9.3.0, intel]
+      providers:
+        mpi: [hpe-mpi@2.21]
+        lapack: [intel-mkl@2019.3.199]
+    hdf5:
+      variants: ~mpi+hl
+    highfive:
+      variants: ~mpi
+    libsonata:
+      variants: ~mpi
+    mvdtool:
+      variants: ~mpi
+    netcdf-c:
+      variants: ~mpi
+    py-h5py:
+      variants: ~mpi
+    py-mvdtool:
+      variants: ~mpi
+    python:
+      version: [3.8.3]
+    vtk:
+      variants: ~mpi~ffmpeg~opengl2
+  specs:
+    - py-atlalign ^py-six@1.15.0
+    - py-atlannot
+    - py-atldld
