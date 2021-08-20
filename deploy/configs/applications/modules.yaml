@@ -64,7 +64,6 @@ modules:
       - py-bluepyparallel
       - py-bluepysnap
       - py-currentscape
-      - py-docs-internal-upload
       - py-efel
       - py-entity-management
       - py-notebook

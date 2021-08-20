@@ -57,7 +57,6 @@ spack:
     - py-bluepyparallel
     - py-bluepysnap
     - py-currentscape
-    - py-docs-internal-upload
     - py-efel
     - py-entity-management
     - py-minis-validation%gcc ^neuron%intel

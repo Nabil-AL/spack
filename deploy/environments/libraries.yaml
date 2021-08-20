@@ -28,6 +28,7 @@ spack:
     - caliper+cuda cuda_arch=70
     - catch2
     - deflect
+    - documentation-dev
     - easyloggingpp
     - eigen
     - fmt
