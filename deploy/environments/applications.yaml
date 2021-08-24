@@ -71,7 +71,7 @@ spack:
     - py-visual-cortex-analysis ^py-h5py~mpi
     - regiodesics
     - reportinglib%intel
-    - spatial-index
+    - spatial-index@develop
     - spykfunc
     - steps+petsc
     - synapsetool
