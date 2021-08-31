@@ -14,7 +14,7 @@ class Hpctm1459(CMakePackage):
     git      = "git@bbpgitlab.epfl.ch:hpc/user/hpctm-1459.git"
 
     version('develop', branch='main', submodules=False)
-    version('0.1', commit='efcee5', submodules=False)
+    version('1.0a', tag='v1.0a', submodules=False)
 
     depends_on('cmake', type='build')
 
