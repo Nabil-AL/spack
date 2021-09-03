@@ -18,4 +18,3 @@ class Hpctm1459(CMakePackage):
     # version('1.0', tag='v1.0', submodules=False)
 
     depends_on('cmake', type='build')
-
