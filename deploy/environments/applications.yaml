@@ -27,6 +27,7 @@ spack:
     - emsim
     - functionalizer@3.12.2
     - hpctm-1459
+    - gene-expression-volume
     - meshball ^brion@3.1.0
     - model-neocortex%intel
     - nest@2.18.0
@@ -42,7 +43,7 @@ spack:
     - neurodamus-thalamus+coreneuron%intel^coreneuron+caliper+knl
     - parquet-converters
     - placement-algorithm
-    - py-region-grower
+    - placement-algorithm@2.1.4
     - psp-validation%gcc ^neuron%intel
     - py-atlalign ^py-six@1.15.0
     - py-atlas-building-tools
@@ -64,9 +65,12 @@ spack:
     - py-morphio
     - py-morphology-repair-workflow
     - py-morph-tool%gcc ^neuron%intel
+    - py-morph-tool@2.8.0%gcc ^neuron%intel
     - py-neurodamus+all_deps
     - py-notebook
     - py-pytouchreader
+    - py-region-grower
+    - py-region-grower@0.2.4
     - py-simwriter
     - py-sonata-network-reduction%gcc ^neuron%intel^py-ipython%gcc
     - py-visual-cortex-analysis ^py-h5py~mpi

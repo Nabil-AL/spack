@@ -39,6 +39,7 @@ modules:
       - emsim
       - functionalizer
       - hpctm-1459
+      - gene-expression-volume
       - meshball
       - model-neocortex
       - nest
