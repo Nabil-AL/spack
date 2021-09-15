@@ -150,7 +150,7 @@ spack:
     - reportinglib%intel
     - spatial-index
     - spykfunc
-    - steps+petsc
+    - steps+distmesh+petsc
     - synapsetool
     - touchdetector
     - ultraliser
