@@ -34,7 +34,9 @@ spack:
         - py-region-grower
         - psp-validation
         - py-atlalign
+        - py-atlannot
         - py-atlas-building-tools
+        - py-atldld
         - py-basalt
         - py-bbp-analysis-framework
         - py-bbp-workflow
@@ -58,6 +60,7 @@ spack:
         - 'py-neurodamus+all_deps'
         - py-simwriter
         - py-sonata-network-reduction
+        - py-token-fetch
         - py-pytouchreader
         - py-visual-cortex-analysis
         - regiodesics
@@ -118,7 +121,9 @@ spack:
     - placement-algorithm@2.1.4
     - psp-validation%gcc ^neuron%intel
     - py-atlalign ^py-six@1.15.0
+    - py-atlannot
     - py-atlas-building-tools
+    - py-atldld
     - py-basalt@0.2.9
     - py-bbp-analysis-framework
     - py-bbp-workflow ^py-h5py~mpi
@@ -145,6 +150,7 @@ spack:
     - py-region-grower@0.2.4
     - py-simwriter
     - py-sonata-network-reduction%gcc ^neuron%intel^py-ipython%gcc
+    - py-token-fetch
     - py-visual-cortex-analysis ^py-h5py~mpi
     - regiodesics
     - reportinglib%intel
