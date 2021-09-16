@@ -26,6 +26,7 @@ spack:
         - py-rtree
         - py-scikit-learn
         - py-tensorflow
+        - py-torch
         - py-virtualenv
       projections:
         all: '{name}/{version}'
@@ -158,6 +159,7 @@ spack:
     - py-sphinx-rtd-theme
     - py-sympy
     - py-tensorflow@2.4.2
+    - py-torch@1.7.0 cuda_arch=70
     - python-dev
     - py-toml
     - py-traceback2
