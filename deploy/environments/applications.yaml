@@ -32,6 +32,7 @@ spack:
         - py-atlannot
         - py-atlas-building-tools
         - py-atldld
+        - py-atlinter
         - py-basalt
         - py-bbp-analysis-framework
         - py-bbp-workflow
@@ -119,6 +120,7 @@ spack:
     - py-atlannot
     - py-atlas-building-tools
     - py-atldld
+    - py-atlinter
     - py-basalt@0.2.9
     - py-bbp-analysis-framework
     - py-bbp-workflow ^py-h5py~mpi
