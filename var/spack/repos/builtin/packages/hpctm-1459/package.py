@@ -19,4 +19,10 @@ class Hpctm1459(CMakePackage):
     version('1.0.20210902', commit='be8b19d', submodules=False)
     # version('1.0', tag='v1.0', submodules=False)
 
+    variant('tests', default=False, description="Enable GitLab CI tests")
+
     depends_on('cmake', type='build')
+
+    def cmake_args(self):
+        return ['-DHPCTM1459_ENABLE_TESTS=%s'
+                % ('ON' if '+tests' in self.spec else 'OFF')]
