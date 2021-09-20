@@ -327,6 +327,10 @@ class PyTorch(PythonPackage, CudaPackage):
         enable_or_disable('zstd', newer=True)
         enable_or_disable('tbb', newer=True)
 
+        # BBP: this seems to be needed as to not confuse the CMake
+        env.set('CMAKE_C_COMPILER', self.compiler.cc)
+        env.set('CMAKE_CXX_COMPILER', self.compiler.cxx)
+
     @run_before('install')
     def build_amd(self):
         if '+rocm' in self.spec:
