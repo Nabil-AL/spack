@@ -38,6 +38,8 @@ default:
     - !reference [.spack_basic_job, before_script]
     # Supplementary scripts
     - export PATH="${DEPLOYMENT_ROOT}/spack/deploy/bin:${PATH}"
+    # Clean test stacks and miscellaneous files from previous stages
+    - rm -rf stack-*xml missing.txt specs.txt
     # These variables will interfere with building software
     - unset $(set +x; env | awk -F= '/^(PMI|SLURM)_/ {print $1}' | xargs)
     # Create a local Spack configuration directory if not present from
