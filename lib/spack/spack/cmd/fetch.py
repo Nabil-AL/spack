@@ -80,7 +80,7 @@ def fetch(parser, args):
                 try:
                     package.do_fetch()
                 except Exception as err:
-                    tty.warn("Encountered exception while fetching %s", spec.name)
+                    tty.error("Encountered exception while fetching {0}".format(s.name))
                     raise err
 
         package = spack.repo.get(spec)
