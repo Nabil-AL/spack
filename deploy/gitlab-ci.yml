@@ -49,9 +49,9 @@ default:
     # Configure installation directories et al based on the job's stage:
     # this keeps environment files simpler
     - |
-      suffix=""
+      DEPLOYMENT_SUFFIX=""
       if [[ "$CI_JOB_STAGE" != "$CI_JOB_NAME" ]]; then
-          suffix="_$CI_JOB_NAME"
+          DEPLOYMENT_SUFFIX="_$CI_JOB_NAME"
       fi
       cat <<EOF > "spack_config/config.yaml"
       config:
@@ -60,7 +60,7 @@ default:
           projections:
             all: install_\${COMPILERNAME}-\${COMPILERVER}/\${PACKAGE}-\${VERSION}-\${HASH:6}
         module_roots:
-          tcl: $DEPLOYMENT_ROOT/stage_${CI_JOB_STAGE}/modules_tcl$suffix
+          tcl: $DEPLOYMENT_ROOT/stage_${CI_JOB_STAGE}/modules_tcl$DEPLOYMENT_SUFFIX
       EOF
     # Hook up software from other stages if needed (also for PRs)
     - configure-upstreams > "spack_config/upstreams.yaml"
@@ -84,12 +84,12 @@ default:
   script:
     # Remove any old Spack environment and recreate it, using the version
     # controlled template
-    - export DEPLOY_ENV="${CI_JOB_NAME}-$(date +%Y-%m)"
+    - export DEPLOY_ENV="${CI_JOB_STAGE}${DEPLOYMENT_SUFFIX}-$(date +%Y-%m)"
     - echo "Processing environment ${DEPLOY_ENV}"
     - if [[ -n "$(spack env list|grep "${DEPLOY_ENV}")" ]]; then
     -     spack env remove -y "${DEPLOY_ENV}"
     - fi
-    - spack env create "${DEPLOY_ENV}" "${SPACK_ROOT}/deploy/environments/${CI_JOB_NAME}.yaml"
+    - spack env create "${DEPLOY_ENV}" "${SPACK_ROOT}/deploy/environments/${CI_JOB_NAME}${DEPLOYMENT_SUFFIX}.yaml"
     - spack env activate "${DEPLOY_ENV}"
     # Concretize and pre-fetch, afterwards build the environment
     - spack concretize -f

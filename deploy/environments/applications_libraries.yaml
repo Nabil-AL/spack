@@ -75,7 +75,6 @@ spack:
     - parmetis
     - petsc~int64+mpi
     - petsc+int64+mpi
-    - pugixml
     - py-argcomplete
     - py-argparse
     - py-aspy-yaml
