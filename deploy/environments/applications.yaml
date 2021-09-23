@@ -3,10 +3,6 @@ spack:
   concretization: separately
   modules:
     tcl:
-      all:
-        environment:
-          set:
-            '${PACKAGE}_ROOT': '${PREFIX}'
       whitelist:
         - asciitoh5
         - brainbuilder
@@ -38,6 +34,8 @@ spack:
         - py-atlas-building-tools
         - py-atldld
         - py-basalt
+        - py-bba-datafetch
+        - py-bba-webexporter
         - py-bbp-analysis-framework
         - py-bbp-workflow
         - py-bglibpy
@@ -49,6 +47,7 @@ spack:
         - py-bluepyparallel
         - py-bluepysnap
         - py-currentscape
+        - py-data-integrity-check
         - py-efel
         - py-entity-management
         - py-notebook
@@ -58,6 +57,8 @@ spack:
         - py-morphology-repair-workflow
         - 'py-mvdtool%gcc'
         - 'py-neurodamus+all_deps'
+        - py-nexusforge
+        - py-nexus-sdk
         - py-simwriter
         - py-sonata-network-reduction
         - py-token-fetch
@@ -125,6 +126,8 @@ spack:
     - py-atlas-building-tools
     - py-atldld
     - py-basalt@0.2.9
+    - py-bba-datafetch
+    - py-bba-webexporter
     - py-bbp-analysis-framework
     - py-bbp-workflow ^py-h5py~mpi
     - py-bglibpy%gcc ^neuron%intel
@@ -136,6 +139,7 @@ spack:
     - py-bluepyparallel
     - py-bluepysnap
     - py-currentscape
+    - py-data-integrity-check
     - py-efel
     - py-entity-management
     - py-minis-validation%gcc ^neuron%intel
@@ -144,6 +148,8 @@ spack:
     - py-morph-tool%gcc ^neuron%intel
     - py-morph-tool@2.8.0%gcc ^neuron%intel
     - py-neurodamus+all_deps
+    - py-nexusforge
+    - py-nexus-sdk
     - py-notebook
     - py-pytouchreader
     - py-region-grower
@@ -161,4 +167,3 @@ spack:
     - touchdetector
     - ultraliser
     - unit-test-translator
-    # - zee
