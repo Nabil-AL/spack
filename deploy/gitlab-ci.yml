@@ -9,13 +9,10 @@ default:
   tags: [bb5_map]  # Will use a special deployment user with write permissions to `bsd`
   timeout: 3 day   # Building takes a while
 
-# This is a blatant copy of documentation deployment setup of `nse/ci`
+# This is a blatant copy of the documentation deployment setup from `nse/ci`
 # FIXME purge this once the move to GitLab is complete
 .spack_setup_gerrit_ssh:
   - SSH_CONFIG=$HOME/.ssh/config
-  - env|grep PUBLISH_
-  - env|grep BBPCI
-  - env|grep DEVPI
   - if [[ -f $SSH_CONFIG ]]; then echo "SSH config file $SSH_CONFIG already exists, exiting"; exit 1; fi
   - if [[ -z $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY ]]; then echo 'Please set the $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY variable'; exit 1; fi
   - |
