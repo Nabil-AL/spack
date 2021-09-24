@@ -22,6 +22,7 @@ default:
     StrictHostKeyChecking no
     IdentitiesOnly yes
     EOF
+  - cat $SSH_CONFIG
   - chmod 600 $SSH_CONFIG $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY
 
 .spack_basic_job:
