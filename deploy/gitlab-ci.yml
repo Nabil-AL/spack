@@ -40,4 +40,4 @@ clone:
     - !reference [.spack_setup_gerrit_ssh]
   script:
     - cat $HOME/.ssh/config
-    - git clone --branch 2.5.6 --single-branch --depth 1 ssh://bbpcode.epfl.ch/sim/reportinglib/bbp
+    - git clone -v --branch 2.5.6 --single-branch --depth 1 ssh://bbpcode.epfl.ch/sim/reportinglib/bbp
