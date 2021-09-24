@@ -22,9 +22,6 @@ default:
     StrictHostKeyChecking no
     IdentitiesOnly yes
     EOF
-  - cat $SSH_CONFIG
-  - cat $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY
-  - cat $PUBLISH_DOCS_BBPCODE_SSH_KEY
   - chmod 600 $SSH_CONFIG $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY
 
 .spack_basic_job:
