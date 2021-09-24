@@ -9,16 +9,19 @@ default:
 # FIXME purge this once the move to GitLab is complete
 .spack_setup_gerrit_ssh:
   - SSH_CONFIG=$HOME/.ssh/config
+  - SSH_KEY=$HOME/.ssh/key
   - if [[ -f $SSH_CONFIG ]]; then echo "SSH config file $SSH_CONFIG already exists, exiting"; exit 1; fi
   - if [[ -z $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY ]]; then echo 'Please set the $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY variable'; exit 1; fi
   - |
-    mkdir -p $(dirname $SSH_CONFIG) && cat > $SSH_CONFIG <<EOF
+    mkdir -p $(dirname $SSH_CONFIG) && 
+    cp $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY $SSH_KEY
+    cat > $SSH_CONFIG <<EOF
     User $(whoami)
-    IdentityFile ${BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY}
+    IdentityFile ${SSH_KEY}
     StrictHostKeyChecking no
     IdentitiesOnly yes
     EOF
-  - chmod 600 $SSH_CONFIG $BBPCIHPCDEPLOY_GERRIT_PRIVATE_KEY
+  - chmod 600 $SSH_CONFIG $SSH_KEY
 
 .spack_basic_job:
   variables:
