@@ -211,7 +211,7 @@ setup_spack:
     - spack concretize -f
     - installed-hashes -m|tee missing.txt
     - if [[ -n "$(<missing.txt)" ]]; then
-    -     spack -d fetch -m
+    -     spack fetch -m
     -     srun -N1 -n4 -c12 -t24:0:0 -Aproj9998 -Ccpu -pprod -J"spack!" slurmspack
     - fi
     # We always want to regenerate the modules and compiler configurations,
