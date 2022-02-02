@@ -7,7 +7,7 @@ from spack import *
 
 
 class PyElasticsearchDsl(PythonPackage):
-    """Elasticsearch DSL is a high-level library whose aim 
+    """Elasticsearch DSL is a high-level library whose aim
     is to help with writing and running queries against Elasticsearch.
     It is built on top of the official low-level client (elasticsearch-py).
     """
