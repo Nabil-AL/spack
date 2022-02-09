@@ -4,13 +4,20 @@
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
 from spack import *
-from spack.pkg.builtin.py_prettytable import PyPrettytable as BuiltinPyPrettytable
 
 
-class PyPrettytable(BuiltinPyPrettytable):
-    version('2.2.1', sha256='6d465005573a5c058d4ca343449a5b28c21252b86afcdfa168cdc6a440f0b24c')
+class PyElasticsearchDsl(PythonPackage):
+    """Elasticsearch DSL is a high-level library whose aim
+    is to help with writing and running queries against Elasticsearch.
+    It is built on top of the official low-level client (elasticsearch-py).
+    """
 
-    depends_on('python@3.6:', when='@2.0.0:', type=('build', 'run'))
-    depends_on("py-setuptools", type='build')
-    depends_on('py-importlib-metadata', when='@2.2.1:^python@:3.8', type=('build', 'run'))
-    depends_on('py-wcwidth', when='@1.0.0:', type=('build', 'run'))
+    homepage = "https://github.com/elastic/elasticsearch-dsl-py"
+    pypi = "elasticsearch-dsl/elasticsearch-dsl-7.4.0.tar.gz"
+
+    version('7.4.0', sha256='c4a7b93882918a413b63bed54018a1685d7410ffd8facbc860ee7fd57f214a6d')
+
+    depends_on('py-setuptools', type='build')
+    depends_on('py-six', type=('build', 'run'))
+    depends_on('py-python-dateutil', type=('build', 'run'))
+    depends_on('py-elasticsearch@7.0.0:7.999', type=('build', 'run'))
